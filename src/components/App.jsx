@@ -9,17 +9,24 @@ export const App = () => {
     const [contacts, setContacts] = useState(null);
     const [filter, setFilter] = useState('');
 
-    useEffect(() => {
-        const localContacts = localStorage.getItem('contacts');
-        if (localContacts) {
-            setContacts(JSON.parse(localContacts));
-        }
-    }, []);
+    // useEffect(() => {
+    //     const localContacts = localStorage.getItem('contacts');
+    //     if (localContacts) {
+    //         setContacts(JSON.parse(localContacts));
+    //     }
+    // }, []);
 
     useEffect(() => {
-       contacts && localStorage.setItem('contacts', JSON.stringify(contacts))
+        const localContacts = localStorage.getItem('contacts');
+        if (contacts) {
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+            return
+        }
+        else if (localContacts) {
+            setContacts(JSON.parse(localContacts));
+        }
     }, [contacts]);
-    
+
     const filterContacts = () => {
         if (contacts) {
             return contacts.filter(({ name }) => {
